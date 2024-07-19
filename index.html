@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jade companion app for Liquid running in the browser">
+    <title>Home</title>
+    <link rel="stylesheet" href="/pico.min.css">
+    <link rel="icon" type="image/x-icon"
+        href="https://d2y5h3osumboay.cloudfront.net/8bjx2lpmkubsx5vodqpcdt7tqm20?=4064512645361149302">
+</head>
+
+<body>
+
+    <!-- Main page -->
+    <header class="container">
+        <hgroup>
+            <h1>Liquid Web Wallet</h1>
+            <p>Jade companion app in the browser - DEMO</p>
+        </hgroup>
+
+        <my-nav></my-nav>
+
+    </header>
+
+    <main id="app" class="container">
+        <progress id="loading-wasm"></progress>
+
+        <p><input type="button" id="connect-jade-button" disabled value="Connect to Jade"></p>
+        <div id="connect-jade-message"></div>
+
+        <br><br>
+        <details>
+            <summary role="button" class="secondary">Watch-only</summary>
+            <textarea placeholder="CT Descriptor" id="descriptor-textarea"></textarea>
+            <p>
+                <button id="watch-only-button" disabled>Use watch-only descriptor</button>
+                <button id="example-descriptor-link" class="secondary">Try example</button>
+            </p>
+
+            <div id="descriptor-message"></div>
+        </details>
+
+        <br><br>
+    </main>
+
+    <br><br>
+    <my-footer>
+        <footer class="container">
+        </footer>
+    </my-footer>
+    <br><br>
+
+    <!-- Pages Templates -->
+    <template id="wallets-page-template">
+        <h2>Wallets</h2>
+        <wallet-selector>
+            <div>
+                <select>
+                    <option>Select wallet</option>
+                    <option value="Wpkh">Wpkh (singlesig)</option>
+                    <option value="ShWpkh">ShWpkh (singlesig)</option>
+                </select>
+            </div>
+            <progress hidden></progress>
+            <br>
+            <a href="#">New multisig wallet on Jade</a>
+        </wallet-selector>
+    </template>
+
+    <template id="balance-page-template">
+        <wallet-balance>
+            <section>
+                <hgroup>
+                    <h2>Balance</h2>
+                    <p></p>
+                </hgroup>
+                <div>
+                    <article aria-busy="true"></article>
+                </div>
+
+                <button hidden>Request testnet coins</button>
+                <br><br>
+                <div class="message"></div>
+            </section>
+        </wallet-balance>
+    </template>
+
+    <template id="transactions-page-template">
+        <wallet-transactions>
+            <section>
+                <hgroup>
+                    <h2>Transactions</h2>
+                    <p></p>
+                </hgroup>
+                <div>
+                    <article aria-busy="true"></article>
+                </div>
+            </section>
+        </wallet-transactions>
+    </template>
+
+    <template id="create-page-template">
+        <section>
+            <h2>Create transaction</h2>
+            <create-transaction>
+                <article aria-busy="true"></article>
+
+                <div hidden>
+                    <fieldset role="group">
+                        <input type="text" placeholder="Address">
+                        <input type="number" placeholder="Units">
+                        <select></select>
+                        <!-- <input type="submit" value="+" id="create-transaction-button-add"
+                            onclick="alert('multiple recipients not yet implemented')"> -->
+                    </fieldset>
+
+                    <div class="message"></div>
+
+                    <button class="create">Create</button>
+                </div>
+            </create-transaction>
+        </section>
+    </template>
+
+    <template id="sign-page-template">
+        <section>
+            <h2>Sign</h2>
+            <sign-transaction>
+                <textarea placeholder="PSET"></textarea>
+                <button class="analyze">Analyze</button>
+                <button class="sign">Sign</button>
+                <button class="broadcast">Broadcast</button>
+                <br><br>
+
+                <div class="message"></div>
+                <div class="analyze"></div>
+
+                <br><br>
+                <h2>Combine</h2>
+
+                <textarea placeholder="PSET"></textarea>
+                <p>
+                    <button class="combine">Combine</button>
+                </p>
+
+            </sign-transaction>
+
+
+        </section>
+    </template>
+
+    <template id="receive-page-template">
+        <section>
+            <h2>Receive</h2>
+            <ask-address>
+                <p><button>Show on Jade</button></p>
+                <div class="message">
+                </div>
+
+            </ask-address>
+            <receive-address>
+                <p>&nbsp;</p>
+            </receive-address>
+
+
+
+        </section>
+    </template>
+
+    <template id="wallet-page-template">
+        <hgroup>
+            <h2>Wallet</h2>
+            <p>descriptor</p>
+        </hgroup>
+        <wallet-descriptor>
+            <textarea readonly></textarea>
+        </wallet-descriptor>
+    </template>
+
+    <template id="register-multisig-page-template">
+        <hgroup>
+            <h2>New multisig wallet</h2>
+        </hgroup>
+        <br><br>
+        <register-wallet>
+            <section>
+                <hgroup>
+                    <h3>Create</h3>
+                    <p>Multisig descriptor</p>
+                </hgroup>
+                <input type="number" placeholder="Threshold" min="0">
+
+                <div>
+                    <template>
+                        <fieldset role="group">
+                            <input readonly class="participant">
+                            <input type="submit" value="Remove">
+                        </fieldset>
+                    </template>
+                </div>
+
+                <fieldset role="group">
+                    <input type="text" placeholder="Keyorigin Xpub">
+                    <input type="submit" value="Add">
+                </fieldset>
+
+                <button>Create</button>
+                <button class="secondary">Add connected Jade</button>
+                <br><br>
+
+                <div class="message"></div>
+            </section>
+
+            <br><br>
+
+            <section>
+                <hgroup>
+                    <h3>Register</h3>
+                    <p>multisig on Jade</p>
+                </hgroup>
+
+                <input type="text" placeholder="Wallet name">
+                <textarea placeholder="Descriptor"></textarea>
+                <button>Register</button>
+                <br><br>
+
+                <div class="message"></div>
+
+            </section>
+
+        </register-wallet>
+    </template>
+
+    <script type="module" src="./bootstrap.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "rm -rf ./dist && webpack --config webpack.config.js --mode=production",
+    "mainnet": "sed -i 's/const network = lwk.Network.testnet()/const network = lwk.Network.mainnet()/g' index.js",
+    "testnet": "sed -i 's/const network = lwk.Network.mainnet()/const network = lwk.Network.testnet()/g' index.js",
+    "deploy-mainnet": "npm run mainnet && npm run build && npm run sync-mainnet",
+    "deploy-testnet": "npm run testnet && npm run build && npm run sync-testnet",
+    "deploy": "npm run deploy-mainnet && npm run deploy-testnet",
+    "sync-mainnet": "rsync -avh dist/ root@praga:/var/www/liquidwebwallet.org/ && rsync -avh dist/ root@gandi:/var/www/liquidwebwallet.org/",
+    "sync-testnet": "rsync -avh dist/ root@praga:/var/www/liquidwebwallet.org/testnet/ && rsync -avh dist/ root@gandi:/var/www/liquidwebwallet.org/testnet/"
+  },
+  "dependencies": {
+    "lwk_wasm": "file:../lwk/lwk_wasm/pkg"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "hello-wasm-pack": "^0.1.0",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
