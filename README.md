@@ -4,11 +4,14 @@
 **NOTE: only a mock up for now**
 
 A [Liquid](https://liquid.net) web wallet that runs in the browser. 
-![image](https://github.com/user-attachments/assets/ee7bc5e6-3073-4b08-9716-9ee1f0e65638)
+
+![image](https://github.com/user-attachments/assets/146f3474-5255-4609-a92c-79eb5600d89a)
 
 Watch-only mode works in any modern browser, connection with [JADE](https://blockstream.com/jade/) requires web serial and works on chrome, chromium, edge.
 
 Based on [LWK wasm](https://github.com/Blockstream/lwk/tree/master/lwk_wasm)
+
+![image](https://github.com/user-attachments/assets/bc8eb8e7-3003-4a50-95ff-6f394053dfac)
 
 
 
