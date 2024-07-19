@@ -11,7 +11,8 @@ Watch-only mode works in any modern browser, connection with [JADE](https://bloc
 
 Based on [LWK wasm](https://github.com/Blockstream/lwk/tree/master/lwk_wasm)
 
-![image](https://github.com/user-attachments/assets/bc8eb8e7-3003-4a50-95ff-6f394053dfac)
+![image](https://github.com/user-attachments/assets/7f341de4-0bf6-43e2-9a21-475b06f671d6)
+
 
 
 
